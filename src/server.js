@@ -17,11 +17,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+/**
+ * Starts the Apollo server.
+ *
+ * @return {Promise<void>} - A promise that resolves when the server is started.
+ */
 const startApolloServer = async () => {
   try {
     await server.start();
     app.use('/graphql', cors(), express.json(), expressMiddleware(server));
   } catch (err) {}
 };
-startApolloServer()
-app.listen(port, () => console.log(`app is listenin on http://localhost:${port}`));
+startApolloServer();
+app.listen(port, () => console.log(`app is listenin on http://localhost:${port}/graphql`));
