@@ -4,6 +4,9 @@ type User{
     name: String!
     email: String!
     role: String!
+    email_verified: Boolean
+    created_at: String
+    updated_at: String
 }
 type Query{
 hello: String

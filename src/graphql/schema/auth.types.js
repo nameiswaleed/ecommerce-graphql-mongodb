@@ -10,5 +10,5 @@ type Mutation{
     signup(name: String!, email: String!, password: String!): User
 }
 
-`
-module.exports = authSchema
+`;
+module.exports = authSchema;

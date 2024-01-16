@@ -10,19 +10,19 @@ const { Users } = require('../database/models');
  * @param {string} password - The password of the user.
  * @return {object} The newly created user object.
  */
-const signUpHandler = async (email, password) => {
+const signUpHandler = async (name,email, password) => {
   try {
     const user = await userServices.getUserByEmail(email);
     if (user) {
       throw new Error('User already exists');
-    } else {
+    } 
       const hashedPassword = await cryptoServices.hashPassword(password);
       const newUser = await userServices.addUserToDB({
         email,
         password: hashedPassword,
       });
       return newUser;
-    }
+    
   } catch (error) {
     console.error(`Err while signing up`, error);
   }

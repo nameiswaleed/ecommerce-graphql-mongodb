@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
     required: true,
   },
   password: {
@@ -17,6 +18,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     enums: userTypes,
     default: 'user',
+  },
+  email_verified: {
+    type: Boolean,
+    default: false,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
   },
 });
 const Users = mongoose.model('Users', userSchema, 'Users');
