@@ -6,6 +6,7 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const { ApolloServer } = require('@apollo/server');
 const { resolvers, typeDefs } = require('./graphql');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 // create apollo server
 const server = new ApolloServer({
   typeDefs,
@@ -16,7 +17,10 @@ const app = express();
 // initialize middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+// main api route
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
 /**
  * Starts the Apollo server.
  *
@@ -26,7 +30,9 @@ const startApolloServer = async () => {
   try {
     await server.start();
     app.use('/graphql', cors(), express.json(), expressMiddleware(server));
-  } catch (err) {}
+  } catch (err) {
+    console.log(`[ERR IN START APOLLO SERVER]`, err);
+  }
 };
 startApolloServer();
 app.listen(port, () => console.log(`app is listenin on http://localhost:${port}/graphql`));

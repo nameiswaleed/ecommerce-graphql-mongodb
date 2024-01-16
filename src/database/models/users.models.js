@@ -1,3 +1,4 @@
+const { userTypes } = require('../../config/types');
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   name: {
@@ -14,7 +15,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true,
+    enums: userTypes,
+    default: 'user',
   },
 });
 const Users = mongoose.model('Users', userSchema, 'Users');
