@@ -1,3 +1,4 @@
+const { sign } = require('crypto');
 const dotenv = require('dotenv');
 const joi = require('joi');
 const path = require('path');
@@ -11,6 +12,7 @@ const envVarsSchema = joi
     JWT_SECRET: joi.string().required(),
     JWT_EXPIRATION: joi.string().required(),
     PORT: joi.number().positive().required(),
+    SITE_NAME: joi.string().required(),
   })
   .unknown();
 const { value: envVars, error } = envVarsSchema.prefs({ errors: { label: 'key' } }).validate(process.env);
@@ -24,4 +26,5 @@ module.exports = {
   dbName: envVars.DB_NAME,
   jwtSecret: envVars.JWT_SECRET,
   jwtExpirationInterval: envVars.JWT_EXPIRATION,
+  siteName: envVars.SITE_NAME,
 };

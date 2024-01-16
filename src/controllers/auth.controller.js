@@ -1,6 +1,7 @@
 const userServices = require('../services/user.service');
 const tokenServices = require('../services/token.service');
 const cryptoServices = require('../services/crypto.service');
+const mailServices = require('../services/email.service');
 const { Users } = require('../database/models');
 
 /**
@@ -10,19 +11,23 @@ const { Users } = require('../database/models');
  * @param {string} password - The password of the user.
  * @return {object} The newly created user object.
  */
-const signUpHandler = async (name,email, password) => {
+const signUpHandler = async (name, email, password) => {
   try {
     const user = await userServices.getUserByEmail(email);
     if (user) {
       throw new Error('User already exists');
-    } 
-      const hashedPassword = await cryptoServices.hashPassword(password);
-      const newUser = await userServices.addUserToDB({
-        email,
-        password: hashedPassword,
-      });
-      return newUser;
-    
+    }
+    const hashedPassword = await cryptoServices.createHashPassword(password);
+    const newUser = await userServices.addUserToDB({
+      name,
+      email,
+      password: hashedPassword,
+    });
+    await mailServices.sendSignUpMail({
+      name,
+      email,
+    });
+    return newUser;
   } catch (error) {
     console.error(`Err while signing up`, error);
   }
