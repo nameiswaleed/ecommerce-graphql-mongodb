@@ -18,7 +18,7 @@ const app = express();
 // initialize middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 // main api route
 app.get('/', (req, res) => {
   res.sendStatus(200);

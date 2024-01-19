@@ -13,6 +13,9 @@ const envVarsSchema = joi
     JWT_EXPIRATION: joi.string().required(),
     PORT: joi.number().positive().required(),
     SITE_NAME: joi.string().required(),
+    MAIL_SERVICE: joi.string().required(),
+    MAIL_USERNAME: joi.string().required(),
+    MAIL_PASSWORD: joi.string().required(),
   })
   .unknown();
 const { value: envVars, error } = envVarsSchema.prefs({ errors: { label: 'key' } }).validate(process.env);
@@ -27,4 +30,7 @@ module.exports = {
   jwtSecret: envVars.JWT_SECRET,
   jwtExpirationInterval: envVars.JWT_EXPIRATION,
   siteName: envVars.SITE_NAME,
+  mailHost: envVars.MAIL_SERVICE,
+  mailUser: envVars.MAIL_USERNAME,
+  mailPassword: envVars.MAIL_PASSWORD,
 };

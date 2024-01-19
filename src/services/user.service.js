@@ -63,10 +63,22 @@ const getUserByEmail = async (email) => {
   }
 };
 
+const deleteUserById = async (id) => {
+  try {
+    const user = await Users.findByIdAndDelete(id);
+    if (!user) throw new Error('User not found');
+    return user;
+  } catch (error) {
+    console.log('[ERR IN GET USER BY EMAIL SERVICE]', error);
+    throw error;
+  }
+};
+
 //exporting functions
 module.exports = {
   addUserToDB,
   getSingleUser,
   getAllUsers,
   getUserByEmail,
+  deleteUserById,
 };

@@ -23,13 +23,16 @@ const signUpHandler = async (name, email, password) => {
       email,
       password: hashedPassword,
     });
-    await mailServices.sendSignUpMail({
+    const mail_sent = await mailServices.sendSignUpMail({
       name,
       email,
     });
+    console.log('sent mail ->', mail_sent);
     return newUser;
   } catch (error) {
-    console.error(`Err while signing up`, error);
+    console.error(`Err while signing up`, error.message);
+    throw new Error(error.message);
+    co;
   }
 };
 

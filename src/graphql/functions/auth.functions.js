@@ -13,9 +13,9 @@ const resolver = {
         if (!email) throw new Error('Email is required');
         if (!password) throw new Error('Password is required');
         if (!validate.isEmail(email)) throw new Error('Invalid email');
-        await signUpHandler(name, email, password);
-        console.log(args);
-        return args;
+        const user_created = await signUpHandler(name, email, password);
+        console.log(user_created);
+        return user_created;
       } catch (error) {
         throw new Error(`${error.message}`);
       }
